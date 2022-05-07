@@ -41,24 +41,23 @@ public class MyHashTable<K, V> {
     public void put(K key, V value) {
 
         int chainIndex = hash(key) % M < 0 index * (-1) : index;
-        int hashCode = hash(key);
-        HashNode<K, V> node = chainArray[chainIndex];
+        HashNode<K, V> chain = chainArray[chainIndex];
 
-        //check if key is already in the hashtable
-        while(node != null){
-            if(node.key.equals(key)) {
-                node.value = value;
+        //check if the key is already in the hashtable
+        while(chain != null){
+            if(chain.key.equals(key)) {
+                chain.value = value;
                 return;
             }
-            node = node.next;
+            chain = chain.next;
         }
 
         //otherwise increase size of the hashtable and add it
         size++;
 
-        node = chainArray[chainIndex];
+        chain = chainArray[chainIndex];
         HashNode<K, V> newNode = new HashNode<>(K, V);
-        newNode.next = node;
+        newNode.next = chain;
         chainArray[chainIndex] = newNode;
 
         //check if load factor is ok
@@ -75,38 +74,43 @@ public class MyHashTable<K, V> {
             tempSize = size;
             size = 0;
 
-            //create new chainArray
+            //create new chainArray with increased capacity
             chainArray = new HashNode[M];
 
             //put old elements in new chainArray
             for(int i = 0; i < tempSize; i++){
-                node = temp[i];
-                while(node != null){
-                    add(node.key, node.value);
-                    node = node.next;
+                //temporary chain element
+                chain = temp[i];
+                while(chain != null){
+                    add(chain.key, chain.value);
+                    chain = chain.next;
                 }
             }
         }
     }
 
     public V get(K key) {
-        /*
-        int bucketIndex = hash(key) % M < 0 index * (-1) : index;
-        int hashCode = hash(key);
-        HashNode<K, V> node = chainArray[bucketIndex];
+        int chainIndex = hash(key) % M < 0 index * (-1) : index;
 
-        while(node != null) {
-            if(head.key.equals(key) && node.)
+        HashNode<K, V> chain = chainArray[chainIndex];
+
+        while(chain != null) {
+            if(chain.key.equals(key)){
+                return chain.value;
+            }
+            chain = chain.next;
         }
 
-         */
+        //if key wasn't found
+        return null;
     }
 
     public V remove(K key) {
-        int bucketIndex = hash(key) % M < 0 index * (-1) : index;
+
+        int chainIndex = hash(key) % M < 0 index * (-1) : index;
         int hashCode = hash(key);
 
-        HashNode<K, V> node = chainArray[bucketIndex], target = null;
+        HashNode<K, V> node = chainArray[chainIndex], target = null;
 
         while(node != null){
             if(node.key.equals(key)) break;

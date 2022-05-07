@@ -106,25 +106,30 @@ public class MyHashTable<K, V> {
     }
 
     public V remove(K key) {
-
+        //determine offset to the target
         int chainIndex = hash(key) % M < 0 index * (-1) : index;
-        int hashCode = hash(key);
 
-        HashNode<K, V> node = chainArray[chainIndex], target = null;
+        HashNode<K, V> chain = chainArray[chainIndex], prev = null;
 
-        while(node != null){
-            if(node.key.equals(key)) break;
-            target = node;
-            node = node.next;
+        //loop through all the elements of a chain
+        while(chain != null){
+            //if key is present and prev is not null (not first element case) delete pointers to an element
+            //then return its value
+            if(chain.key.equals(key) && prev != null){
+                prev.next = chain.next;
+                return chain.value;
+            }else{
+                //the first element case (prev is null)
+                //the second element will become the head of a chain (the first element will be deleted)
+                chainArray[chainIndex] = chain.next;
+                return chain.value;
+            }
+            prev = chain;
+            chain = chain.next;
         }
-
-        if(node == null) return null;
-
-        if(target != null){
-            target.next = node.next;
-        } else {
-
-        }
+        
+        //return null to the caller if nothing was found
+        return null;
     }
 
     public boolean contains(V value) {}

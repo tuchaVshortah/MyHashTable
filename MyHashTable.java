@@ -40,7 +40,7 @@ public class MyHashTable<K, V> {
 
     public void put(K key, V value) {
 
-        int chainIndex = hash(key) % M < 0 index * (-1) : index;
+        int chainIndex = hash(key) % M < 0 ? index * (-1) : index;
         HashNode<K, V> chain = chainArray[chainIndex];
 
         //check if the key is already in the hashtable
@@ -90,7 +90,7 @@ public class MyHashTable<K, V> {
     }
 
     public V get(K key) {
-        int chainIndex = hash(key) % M < 0 index * (-1) : index;
+        int chainIndex = hash(key) % M < 0 ? index * (-1) : index;
 
         HashNode<K, V> chain = chainArray[chainIndex];
 
@@ -107,7 +107,7 @@ public class MyHashTable<K, V> {
 
     public V remove(K key) {
         //determine offset to the target
-        int chainIndex = hash(key) % M < 0 index * (-1) : index;
+        int chainIndex = hash(key) % M < 0 ? index * (-1) : index;
 
         HashNode<K, V> chain = chainArray[chainIndex], prev = null;
 

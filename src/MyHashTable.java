@@ -22,6 +22,7 @@ public class MyHashTable<K, V> {
     private int size = 0;
 
     public MyHashTable() {
+        chainArray = new HashNode[M];
         for(int i = 0; i < M; i++){
             chainArray[i] = null;
         }
@@ -29,6 +30,7 @@ public class MyHashTable<K, V> {
 
     public MyHashTable(int M) {
         this.M = M;
+        chainArray = new HashNode[M];
         for(int i = 0; i < M; i++){
             chainArray[i] = null;
         }
@@ -57,7 +59,7 @@ public class MyHashTable<K, V> {
         size++;
 
         chain = chainArray[chainIndex];
-        HashNode<K, V> newNode = new HashNode<>(K, V);
+        HashNode<K, V> newNode = new HashNode<>(key, value);
         newNode.next = chain;
         chainArray[chainIndex] = newNode;
 
@@ -65,18 +67,20 @@ public class MyHashTable<K, V> {
         if((1.0 * size) / M >= 0.75){
 
             //create a temporarty copy of the hashtable
-            HashNode<K, V> temp[M];
+            int tempSize = size;
+            HashNode<K, V> temp[] = new HashNode[tempSize];
             for(int i = 0; i < size; i++){
                 temp[i] = chainArray[i];
             }
 
+
             //increase load factor
             M *= 2;
-            int tempSize = size;
             size = 0;
 
             //create new chainArray with increased capacity
             chainArray = new HashNode[M];
+
 
             //put old elements in new chainArray
             for(int i = 0; i < tempSize; i++){
@@ -122,7 +126,7 @@ public class MyHashTable<K, V> {
                 prev.next = chain.next;
                 size--;
                 return chain.value;
-            }else{
+            }else if(chain.key.equals(key) && prev == null){
                 //the first element case (prev is null)
                 //the second element will become the head of a chain (the first element will be deleted)
                 chainArray[chainIndex] = chain.next;

@@ -144,7 +144,7 @@ public class MyHashTable<K, V> {
 
         HashNode<K, V> chain;
         //iterate through all chains in the chainArray
-        for(int i = 0; i < size; i++){
+        for(int i = 0; i < M; i++){
             chain = chainArray[i];
             while(chain != null) {
                 //loop through all the nodes of a chain until null node is reached
@@ -164,7 +164,7 @@ public class MyHashTable<K, V> {
         HashNode<K, V> chain;
         //check if value is present in the chainArray
         if(contains(value)){
-            for(int i = 0; i < size; i++){
+            for(int i = 0; i < M; i++){
                 chain = chainArray[i];
                 while(chain != null) {
                     //loop through all the nodes of a chain until null node is reached

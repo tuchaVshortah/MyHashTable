@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class BST<K extends Comparable<K>, V> {
 
     private Node root;
@@ -101,7 +103,28 @@ public class BST<K extends Comparable<K>, V> {
     }
 
     public Iterable<K> iterator() {
-        return null;
+        Node tempRoot = root;
+        List<K> list = new ArrayList<>();
+        Stack<Node> stack = new Stack<>();
+        stack.push(root);
+        while(tempRoot != null){
+            stack.push(tempRoot);
+            tempRoot = tempRoot.left;
+        }
+
+        while(!stack.isEmpty()){
+            tempRoot = stack.pop();
+            list.add(tempRoot.left.key);
+            if(tempRoot.right != null){
+                tempRoot = tempRoot.right;
+                stack.push(tempRoot);
+                while(tempRoot.left != null){
+                    tempRoot = tempRoot.left;
+                    stack.push(tempRoot);
+                }
+            }
+        }
+        return list;
     }
 
 }

@@ -13,7 +13,7 @@ public class BST<K extends Comparable<K>, V> {
     }
 
     public void put(K key, V val) {
-        Node tempRoot = null;
+        Node tempRoot = root;
 
         /*
         if(root == null || root.key.compareTo(node.key) == 0){
@@ -58,16 +58,16 @@ public class BST<K extends Comparable<K>, V> {
     }
 
     public V get(K key) {
-        tempRoot = root;
+        Node tempRoot = root;
         while(true){
             if(tempRoot == null){
-                tempRoot = new Node(key, val);
-            }else if(tempRoot.key.compareTo(node.key) == 1){
+                return null;
+            }else if(tempRoot.key.compareTo(key) == 1){
                 tempRoot = tempRoot.left;
-            }else if(tempRoot.key.compareTo(node.key) == -1){
+            }else if(tempRoot.key.compareTo(key) == -1){
                 tempRoot = tempRoot.right;
-            }else if(tempRoot.key.compareTo(node.key) == 0){
-                tempRoot.value = val;
+            }else if(tempRoot.key.compareTo(key) == 0){
+                return tempRoot.value;
             }
         }
     }

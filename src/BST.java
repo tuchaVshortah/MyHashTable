@@ -15,6 +15,7 @@ public class BST<K extends Comparable<K>, V> {
     public void put(K key, V val) {
         Node node = new Node(key, val), tempRoot = null;
 
+        /*
         if(root == null || root.key.compareTo(node.key) == 0){
             root = node;
             return;
@@ -39,10 +40,28 @@ public class BST<K extends Comparable<K>, V> {
                 return;
             }
         }
+        
+         */
+
+        tempRoot = root;
+        while(true){
+            if(tempRoot == null){
+                tempRoot = new Node(key, val);
+            }else if(tempRoot.key.compareTo(node.key) == 1){
+                tempRoot = tempRoot.left;
+            }else if(tempRoot.key.compareTo(node.key) == -1){
+                tempRoot = tempRoot.right;
+            }else if(tempRoot.key.compareTo(node.key) == 0){
+                tempRoot.value = val;
+            }
+        }
     }
 
     public V get(K key) {
-        return null;
+        if(root.key.compareTo(key) == 0){
+            return root.value;
+        }
+
     }
 
     public void delete(K key) {}

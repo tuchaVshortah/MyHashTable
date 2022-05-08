@@ -35,12 +35,13 @@ public class MyHashTable<K, V> {
     }
 
     private int hash(K key) {
-        return key.hashCode() & 0x7fffffff) % M;
+        return (key.hashCode() & 0x7fffffff) % M;
     }
 
     public void put(K key, V value) {
 
-        int chainIndex = hash(key) % M < 0 ? index * (-1) : index;
+        int chainIndex = hash(key) % M;
+        chainIndex = chainIndex < 0 ? chainIndex * (-1) : chainIndex;
         HashNode<K, V> chain = chainArray[chainIndex];
 
         //check if the key is already in the hashtable
@@ -71,7 +72,7 @@ public class MyHashTable<K, V> {
 
             //increase load factor
             M *= 2;
-            tempSize = size;
+            int tempSize = size;
             size = 0;
 
             //create new chainArray with increased capacity
@@ -82,7 +83,7 @@ public class MyHashTable<K, V> {
                 //temporary chain element
                 chain = temp[i];
                 while(chain != null){
-                    add(chain.key, chain.value);
+                    put(chain.key, chain.value);
                     chain = chain.next;
                 }
             }
@@ -90,7 +91,8 @@ public class MyHashTable<K, V> {
     }
 
     public V get(K key) {
-        int chainIndex = hash(key) % M < 0 ? index * (-1) : index;
+        int chainIndex = hash(key) % M;
+        chainIndex = chainIndex < 0 ? chainIndex * (-1) : chainIndex;
 
         HashNode<K, V> chain = chainArray[chainIndex];
 
@@ -107,7 +109,8 @@ public class MyHashTable<K, V> {
 
     public V remove(K key) {
         //determine offset to the target
-        int chainIndex = hash(key) % M < 0 ? index * (-1) : index;
+        int chainIndex = hash(key) % M;
+        chainIndex = chainIndex < 0 ? chainIndex * (-1) : chainIndex;
 
         HashNode<K, V> chain = chainArray[chainIndex], prev = null;
 
@@ -148,12 +151,13 @@ public class MyHashTable<K, V> {
                 chain = chain.next;
             }
         }
-        //otherwise return false
+        //otherwise, return false
         return false;
     }
 
     public K getKey(V value) {
 
+        HashNode<K, V> chain;
         //check if value is present in the chainArray
         if(contains(value)){
             for(int i = 0; i < size; i++){

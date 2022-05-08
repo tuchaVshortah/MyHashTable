@@ -2,7 +2,7 @@ import java.util.*;
 
 public class BST<K extends Comparable<K>, V> {
 
-    private Node root;
+    private Node root = null;
 
     private class Node {
         private K key;
@@ -15,6 +15,11 @@ public class BST<K extends Comparable<K>, V> {
     }
 
     public void put(K key, V val) {
+
+        if(root == null){
+            root = new Node(key, val);
+            return;
+        }
         Node tempRoot = root;
 
         /*
@@ -45,18 +50,25 @@ public class BST<K extends Comparable<K>, V> {
 
          */
 
-        tempRoot = root;
         while(true){
-            if(tempRoot == null){
-                tempRoot = new Node(key, val);
-            }else if(tempRoot.key.compareTo(key) == 1){
+            if(tempRoot.key.compareTo(key) > 0 && tempRoot.left == null){
+                tempRoot.left = new Node(key, val);
                 tempRoot = tempRoot.left;
-            }else if(tempRoot.key.compareTo(key) == -1){
+                break;
+            }else if(tempRoot.key.compareTo(key) > 0 && tempRoot.left != null){
+                tempRoot = tempRoot.left;
+            }else if(tempRoot.key.compareTo(key) < 0 && tempRoot.right == null){
+                tempRoot.right = new Node(key, val);
+                tempRoot = tempRoot.right;
+                break;
+            }else if(tempRoot.key.compareTo(key) < 0 && tempRoot.right != null){
                 tempRoot = tempRoot.right;
             }else if(tempRoot.key.compareTo(key) == 0){
                 tempRoot.value = val;
+                break;
             }
         }
+        System.out.println("put (K, V): " + key + " " + val);
     }
 
     public V get(K key) {
@@ -64,9 +76,9 @@ public class BST<K extends Comparable<K>, V> {
         while(true){
             if(tempRoot == null){
                 return null;
-            }else if(tempRoot.key.compareTo(key) == 1){
+            }else if(tempRoot.key.compareTo(key) > 0){
                 tempRoot = tempRoot.left;
-            }else if(tempRoot.key.compareTo(key) == -1){
+            }else if(tempRoot.key.compareTo(key) < 0){
                 tempRoot = tempRoot.right;
             }else if(tempRoot.key.compareTo(key) == 0){
                 return tempRoot.value;
@@ -79,9 +91,9 @@ public class BST<K extends Comparable<K>, V> {
         while(true){
             if(tempRoot == null){
                 return;
-            }else if(tempRoot.key.compareTo(key) == 1){
+            }else if(tempRoot.key.compareTo(key) > 0){
                 tempRoot = tempRoot.left;
-            }else if(tempRoot.key.compareTo(key) == -1){
+            }else if(tempRoot.key.compareTo(key) < 0){
                 tempRoot = tempRoot.right;
             }else if(tempRoot.key.compareTo(key) == 0){
                 if(tempRoot.left == null){
@@ -106,7 +118,6 @@ public class BST<K extends Comparable<K>, V> {
         Node tempRoot = root;
         List<K> list = new ArrayList<>();
         Stack<Node> stack = new Stack<>();
-        stack.push(root);
         while(tempRoot != null){
             stack.push(tempRoot);
             tempRoot = tempRoot.left;
@@ -114,7 +125,11 @@ public class BST<K extends Comparable<K>, V> {
 
         while(!stack.isEmpty()){
             tempRoot = stack.pop();
-            list.add(tempRoot.left.key);
+            if(tempRoot.left != null){
+                list.add(tempRoot.left.key);
+                System.out.println("DEBUG: " + tempRoot.left.key);
+            }
+
             if(tempRoot.right != null){
                 tempRoot = tempRoot.right;
                 stack.push(tempRoot);

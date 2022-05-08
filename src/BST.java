@@ -47,11 +47,11 @@ public class BST<K extends Comparable<K>, V> {
         while(true){
             if(tempRoot == null){
                 tempRoot = new Node(key, val);
-            }else if(tempRoot.key.compareTo(node.key) == 1){
+            }else if(tempRoot.key.compareTo(key) == 1){
                 tempRoot = tempRoot.left;
-            }else if(tempRoot.key.compareTo(node.key) == -1){
+            }else if(tempRoot.key.compareTo(key) == -1){
                 tempRoot = tempRoot.right;
-            }else if(tempRoot.key.compareTo(node.key) == 0){
+            }else if(tempRoot.key.compareTo(key) == 0){
                 tempRoot.value = val;
             }
         }

@@ -134,6 +134,7 @@ public class MyHashTable<K, V> {
     }
 
     public boolean contains(V value) {
+
         HashNode<K, V> chain;
         //iterate through all chains in the chainArray
         for(int i = 0; i < size; i++){
@@ -151,6 +152,24 @@ public class MyHashTable<K, V> {
         return false;
     }
 
-    public K getKey(V value) {}
+    public K getKey(V value) {
+
+        //check if value is present in the chainArray
+        if(contains(value)){
+            for(int i = 0; i < size; i++){
+                chain = chainArray[i];
+                while(chain != null) {
+                    //loop through all the nodes of a chain until null node is reached
+                    if (chain.value.equals(value)) {
+                        //return key to the value
+                        return chain.key;
+                    }
+                    chain = chain.next;
+                }
+            }
+        }
+        //otherwise return null
+        return null;
+    }
 
 }

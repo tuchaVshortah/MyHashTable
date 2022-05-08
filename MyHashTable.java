@@ -133,7 +133,23 @@ public class MyHashTable<K, V> {
         return null;
     }
 
-    public boolean contains(V value) {}
+    public boolean contains(V value) {
+        HashNode<K, V> chain;
+        //iterate through all chains in the chainArray
+        for(int i = 0; i < size; i++){
+            chain = chainArray[i];
+            while(chain != null) {
+                //loop through all the nodes of a chain until null node is reached
+                if (chain.value.equals(value)) {
+                    //return true on success
+                    return true;
+                }
+                chain = chain.next;
+            }
+        }
+        //otherwise return false
+        return false;
+    }
 
     public K getKey(V value) {}
 

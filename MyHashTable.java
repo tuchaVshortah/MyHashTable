@@ -117,6 +117,7 @@ public class MyHashTable<K, V> {
             //then return its value
             if(chain.key.equals(key) && prev != null){
                 prev.next = chain.next;
+                size--;
                 return chain.value;
             }else{
                 //the first element case (prev is null)

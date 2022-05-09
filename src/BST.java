@@ -185,13 +185,18 @@ public class BST<K extends Comparable<K>, V> {
     }
 
     public Iterable<K> iterator() {
-        //need fixes
+
         Node tempRoot = root;
         List<K> list = new ArrayList<>();
         Stack<Node> stack = new Stack<>();
+
+        //check if it is possible to iterate through elements of the tree
+
         if(tempRoot == null){
             return null;
         }
+
+        //if so, push all the left elements to stack
 
         stack.push(tempRoot);
         while(tempRoot.left != null){
@@ -199,8 +204,15 @@ public class BST<K extends Comparable<K>, V> {
             stack.push(tempRoot);
         }
 
+        //traverse through tree using this logic:
+        //
+        //           parent (access it from stack)
+        //         /        \
+        //    node            node (if there exist left children, iterate and push them to stack)
+
         while(!stack.isEmpty()){
             tempRoot = stack.pop();
+            
             if(tempRoot != null) {
                 list.add(tempRoot.key);
             }

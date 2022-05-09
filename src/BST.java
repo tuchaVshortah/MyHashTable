@@ -61,7 +61,6 @@ public class BST<K extends Comparable<K>, V> {
                 break;
             }
         }
-        System.out.println("put (K, V): " + key + " " + val);
     }
 
     public V get(K key) {
@@ -141,7 +140,6 @@ public class BST<K extends Comparable<K>, V> {
             tempRoot = stack.pop();
             if(tempRoot.left != null){
                 list.add(tempRoot.left.key);
-                System.out.println("DEBUG: " + tempRoot.left.key);
             }
 
             if(tempRoot.right != null){

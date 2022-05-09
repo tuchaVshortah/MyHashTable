@@ -185,6 +185,7 @@ public class BST<K extends Comparable<K>, V> {
     }
 
     public Iterable<K> iterator() {
+        //need fixes
         Node tempRoot = root;
         List<K> list = new ArrayList<>();
         Stack<Node> stack = new Stack<>();

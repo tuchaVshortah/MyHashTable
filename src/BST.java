@@ -87,29 +87,50 @@ public class BST<K extends Comparable<K>, V> {
     }
 
     public void delete(K key) {
-        Node tempRoot = root;
-        while(true){
-            if(tempRoot == null){
-                return;
+        Node tempRoot = root, prevRoot = tempRoot;
+        while(tempRoot != null){
+            if(tempRoot.key.compareTo(key) == 0){
+                if(tempRoot.left != null && tempRoot.right != null){
+
+                    //find minimum element
+                    Node minimum = tempRoot.right;
+                    while(true){
+                        if(minimum.left == null){
+                            break;
+                        }else{
+                            minimum = minimum.left;
+                        }
+                    }
+                    tempRoot.key = minimum.key;
+                    tempRoot.value = minimum.value;
+                    minimum = null;
+                    break;
+                }else if(tempRoot.left == null && tempRoot.right != null){
+                    tempRoot.key = tempRoot.right.key;
+                    tempRoot.value = tempRoot.right.value;
+                    tempRoot.left = tempRoot.right.left;
+                    tempRoot.right = tempRoot.right.right;
+                    break;
+                }else if(tempRoot.left != null && tempRoot.right == null){
+                    tempRoot.key = tempRoot.left.key;
+                    tempRoot.value = tempRoot.left.value;
+                    tempRoot.left = tempRoot.left.left;
+                    tempRoot.right = tempRoot.left.right;
+                    break;
+                }else if(tempRoot.left == null && tempRoot.right == null){
+                    if(prevRoot.left == tempRoot){
+                        prevRoot.left = null;
+                    }else if(prevRoot.right == tempRoot){
+                        prevRoot.right = null;
+                    }
+                    break;
+                }
             }else if(tempRoot.key.compareTo(key) > 0){
+                prevRoot = tempRoot;
                 tempRoot = tempRoot.left;
             }else if(tempRoot.key.compareTo(key) < 0){
+                prevRoot = tempRoot;
                 tempRoot = tempRoot.right;
-            }else if(tempRoot.key.compareTo(key) == 0){
-                if(tempRoot.left == null){
-                    tempRoot = tempRoot.right;
-                }else if(tempRoot.right == null){
-                    tempRoot = tempRoot.left;
-                }else if(tempRoot.left == null && tempRoot.right == null){
-                    tempRoot = null;
-                }else if(tempRoot.left != null && tempRoot.right != null){
-                    Node successor = tempRoot.right;
-                    while(successor.left != null){
-                        successor = successor.left;
-                    }
-                    successor.left = tempRoot.left;
-                    tempRoot = successor;
-                }
             }
         }
     }

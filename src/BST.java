@@ -189,15 +189,20 @@ public class BST<K extends Comparable<K>, V> {
         Node tempRoot = root;
         List<K> list = new ArrayList<>();
         Stack<Node> stack = new Stack<>();
-        while(tempRoot != null){
-            stack.push(tempRoot);
+        if(tempRoot == null){
+            return null;
+        }
+
+        stack.push(tempRoot);
+        while(tempRoot.left != null){
             tempRoot = tempRoot.left;
+            stack.push(tempRoot);
         }
 
         while(!stack.isEmpty()){
             tempRoot = stack.pop();
-            if(tempRoot.left != null){
-                list.add(tempRoot.left.key);
+            if(tempRoot != null) {
+                list.add(tempRoot.key);
             }
 
             if(tempRoot.right != null){

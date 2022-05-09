@@ -1,6 +1,6 @@
 # MyHashTable
-Implementation of the HashTable and BinarySearchTree
+Implementation of HashTable and BinarySearchTree
 
-HashTable is finished
+HashTable is finished (stable)
 
-BinarySearchTree is in progress
+BinarySearchTree is finished (stable)

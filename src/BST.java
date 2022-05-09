@@ -107,7 +107,7 @@ public class BST<K extends Comparable<K>, V> {
                 //if target node containing the key was found, find a specific case
 
                 if(tempRoot.left != null && tempRoot.right != null){
-                    System.out.println("tempRoot.left != null && tempRoot.right != null case worked with key: " + key);
+                    //System.out.println("tempRoot.left != null && tempRoot.right != null case worked with key: " + key);
                     //if children of a node aren't nulls, find minimum element
 
                     Node minimum = tempRoot.right, prevMin = minimum;
@@ -133,7 +133,7 @@ public class BST<K extends Comparable<K>, V> {
                     }
                     break;
                 }else if(tempRoot.left == null && tempRoot.right != null){
-                    System.out.println("tempRoot.left == null && tempRoot.right != null case worked with key: " + key);
+                    //System.out.println("tempRoot.left == null && tempRoot.right != null case worked with key: " + key);
 
                     //if only one of children is not null, move its data and its children to the node
 
@@ -144,7 +144,7 @@ public class BST<K extends Comparable<K>, V> {
                     }
                     break;
                 }else if(tempRoot.left != null && tempRoot.right == null){
-                    System.out.println("tempRoot.left != null && tempRoot.right == null case worked with key: " + key);
+                    //System.out.println("tempRoot.left != null && tempRoot.right == null case worked with key: " + key);
 
                     //if only one of children is not null, move its data and its children to the node
 
@@ -155,7 +155,7 @@ public class BST<K extends Comparable<K>, V> {
                     }
                     break;
                 }else if(tempRoot.left == null && tempRoot.right == null){
-                    System.out.println("tempRoot.left == null && tempRoot.right == null case worked with key: " + key);
+                    //System.out.println("tempRoot.left == null && tempRoot.right == null case worked with key: " + key);
 
                     //if both children are equal to null, just delete the node
 

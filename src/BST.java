@@ -86,7 +86,7 @@ public class BST<K extends Comparable<K>, V> {
                 tempRoot = tempRoot.right;
             }else if(tempRoot.key.compareTo(key) == 0){
 
-                //if the key was found, return the corresponding value stored in the target node
+                //if the key was found, return corresponding value stored in the target node
 
                 return tempRoot.value;
             }
@@ -94,12 +94,22 @@ public class BST<K extends Comparable<K>, V> {
     }
 
     public void delete(K key) {
+
+        //traverse the tree
+        //while null is reached
+        //if there is a null, it means there is nothing to delete, so do nothing
+
         Node tempRoot = root, prevRoot = tempRoot;
         while(tempRoot != null){
+
             if(tempRoot.key.compareTo(key) == 0){
+
+                //if target node containing the key was found, find a specific case
+
                 if(tempRoot.left != null && tempRoot.right != null){
 
-                    //find minimum element
+                    //if children of a node aren't nulls, find minimum element
+
                     Node minimum = tempRoot.right;
                     while(true){
                         if(minimum.left == null){
@@ -108,23 +118,38 @@ public class BST<K extends Comparable<K>, V> {
                             minimum = minimum.left;
                         }
                     }
+
+                    //delete the node: move data stored in minimum in it
+
                     tempRoot.key = minimum.key;
                     tempRoot.value = minimum.value;
+
+                    //delete minimum
+
                     minimum = null;
                     break;
                 }else if(tempRoot.left == null && tempRoot.right != null){
+
+                    //if only one of children is not null, move its data and its children to the node
+
                     tempRoot.key = tempRoot.right.key;
                     tempRoot.value = tempRoot.right.value;
                     tempRoot.left = tempRoot.right.left;
                     tempRoot.right = tempRoot.right.right;
                     break;
                 }else if(tempRoot.left != null && tempRoot.right == null){
+
+                    //if only one of children is not null, move its data and its children to the node
+
                     tempRoot.key = tempRoot.left.key;
                     tempRoot.value = tempRoot.left.value;
                     tempRoot.left = tempRoot.left.left;
                     tempRoot.right = tempRoot.left.right;
                     break;
                 }else if(tempRoot.left == null && tempRoot.right == null){
+
+                    //if both children are equal to null, just delete the node
+
                     if(prevRoot.left == tempRoot){
                         prevRoot.left = null;
                     }else if(prevRoot.right == tempRoot){
@@ -133,9 +158,15 @@ public class BST<K extends Comparable<K>, V> {
                     break;
                 }
             }else if(tempRoot.key.compareTo(key) > 0){
+
+                //if the key value is less than one in a node, traverse to the left
+
                 prevRoot = tempRoot;
                 tempRoot = tempRoot.left;
             }else if(tempRoot.key.compareTo(key) < 0){
+
+                //if the key value is bigger than one in a node, traverse to the right
+
                 prevRoot = tempRoot;
                 tempRoot = tempRoot.right;
             }

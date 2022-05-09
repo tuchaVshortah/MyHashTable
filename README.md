@@ -1,5 +1,5 @@
 # MyHashTable
-Implementation of the HashTable and BinarySearchTree
+Implementation of HashTable and BinarySearchTree
 
 HashTable is finished (stable)
 

@@ -29,18 +29,23 @@ public class BST<K extends Comparable<K>, V> {
 
         while(true){
 
-            if(tempRoot.key.compareTo(key) > 0 && tempRoot.left == null){
+            if(tempRoot.key.compareTo(key) > 0 && tempRoot.left != null){
+
+                //if the key value is less than one in a node, traverse to the left
+
+                tempRoot = tempRoot.left;
+            }else if(tempRoot.key.compareTo(key) < 0 && tempRoot.right != null){
+
+                //if the key value is bigger than one in a node, traverse to the right
+
+                tempRoot = tempRoot.right;
+            }else if(tempRoot.key.compareTo(key) > 0 && tempRoot.left == null){
 
                 //if end of the traversal (to the left) is reached, create a new node
                 //containing the key and value pair
 
                 tempRoot.left = new Node(key, val);
                 break;
-            }else if(tempRoot.key.compareTo(key) > 0 && tempRoot.left != null){
-
-                //if the key value is less than one in a node, traverse to the left
-
-                tempRoot = tempRoot.left;
             }else if(tempRoot.key.compareTo(key) < 0 && tempRoot.right == null){
 
                 //if end of the traversal (to the right) is reached, create a new node
@@ -48,11 +53,6 @@ public class BST<K extends Comparable<K>, V> {
 
                 tempRoot.right = new Node(key, val);
                 break;
-            }else if(tempRoot.key.compareTo(key) < 0 && tempRoot.right != null){
-
-                //if the key value is bigger than one in a node, traverse to the right
-
-                tempRoot = tempRoot.right;
             }else if(tempRoot.key.compareTo(key) == 0){
 
                 //if a key was found with the same key value, change the value contained in the target node
@@ -107,14 +107,15 @@ public class BST<K extends Comparable<K>, V> {
                 //if target node containing the key was found, find a specific case
 
                 if(tempRoot.left != null && tempRoot.right != null){
-
+                    System.out.println("tempRoot.left != null && tempRoot.right != null case worked with key: " + key);
                     //if children of a node aren't nulls, find minimum element
 
-                    Node minimum = tempRoot.right;
+                    Node minimum = tempRoot.right, prevMin = minimum;
                     while(true){
                         if(minimum.left == null){
                             break;
                         }else{
+                            prevMin = minimum;
                             minimum = minimum.left;
                         }
                     }
@@ -125,28 +126,36 @@ public class BST<K extends Comparable<K>, V> {
                     tempRoot.value = minimum.value;
 
                     //delete minimum
-
-                    minimum = null;
+                    if(prevMin.left == null){
+                        tempRoot.right = null;
+                    }else if(prevMin.left != null){
+                        prevMin.left = null;
+                    }
                     break;
                 }else if(tempRoot.left == null && tempRoot.right != null){
+                    System.out.println("tempRoot.left == null && tempRoot.right != null case worked with key: " + key);
 
                     //if only one of children is not null, move its data and its children to the node
 
-                    tempRoot.key = tempRoot.right.key;
-                    tempRoot.value = tempRoot.right.value;
-                    tempRoot.left = tempRoot.right.left;
-                    tempRoot.right = tempRoot.right.right;
+                    if(prevRoot.left == tempRoot){
+                        prevRoot.left = tempRoot.right;
+                    }else if(prevRoot.right == tempRoot){
+                        prevRoot.left = tempRoot.right;
+                    }
                     break;
                 }else if(tempRoot.left != null && tempRoot.right == null){
+                    System.out.println("tempRoot.left != null && tempRoot.right == null case worked with key: " + key);
 
                     //if only one of children is not null, move its data and its children to the node
 
-                    tempRoot.key = tempRoot.left.key;
-                    tempRoot.value = tempRoot.left.value;
-                    tempRoot.left = tempRoot.left.left;
-                    tempRoot.right = tempRoot.left.right;
+                    if(prevRoot.left == tempRoot){
+                        prevRoot.left = tempRoot.left;
+                    }else if(prevRoot.right == tempRoot){
+                        prevRoot.left = tempRoot.left;
+                    }
                     break;
                 }else if(tempRoot.left == null && tempRoot.right == null){
+                    System.out.println("tempRoot.left == null && tempRoot.right == null case worked with key: " + key);
 
                     //if both children are equal to null, just delete the node
 
@@ -154,6 +163,8 @@ public class BST<K extends Comparable<K>, V> {
                         prevRoot.left = null;
                     }else if(prevRoot.right == tempRoot){
                         prevRoot.right = null;
+                    }else if(prevRoot == tempRoot && prevRoot == root){
+                        root = null;
                     }
                     break;
                 }

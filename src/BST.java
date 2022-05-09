@@ -20,7 +20,7 @@ public class BST<K extends Comparable<K>, V> {
             root = new Node(key, val);
             return;
         }
-        
+
         Node tempRoot = root;
 
         while(true){

@@ -64,15 +64,30 @@ public class BST<K extends Comparable<K>, V> {
     }
 
     public V get(K key) {
+
+        //traverse the tree
         Node tempRoot = root;
         while(true){
+
             if(tempRoot == null){
+
+                //if the key wasn't found return  nothing (null)
+
                 return null;
             }else if(tempRoot.key.compareTo(key) > 0){
+
+                //if the key value is less than one in a node, traverse to the left
+
                 tempRoot = tempRoot.left;
             }else if(tempRoot.key.compareTo(key) < 0){
+
+                //if the key value is bigger than one in a node, traverse to the right
+
                 tempRoot = tempRoot.right;
             }else if(tempRoot.key.compareTo(key) == 0){
+
+                //if the key was found, return the corresponding value stored in the target node
+
                 return tempRoot.value;
             }
         }

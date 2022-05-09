@@ -16,27 +16,47 @@ public class BST<K extends Comparable<K>, V> {
 
     public void put(K key, V val) {
 
+        //check if root is null
+        //if so, create a new node for root
+        //then return
         if(root == null){
             root = new Node(key, val);
             return;
         }
 
+        //otherwise, traverse the tree
         Node tempRoot = root;
 
         while(true){
+
             if(tempRoot.key.compareTo(key) > 0 && tempRoot.left == null){
+
+                //if end of the traversal (to the left) is reached, create a new node
+                //containing the key and value pair
+
                 tempRoot.left = new Node(key, val);
-                tempRoot = tempRoot.left;
                 break;
             }else if(tempRoot.key.compareTo(key) > 0 && tempRoot.left != null){
+
+                //if the key value is less than one in a node, traverse to the left
+
                 tempRoot = tempRoot.left;
             }else if(tempRoot.key.compareTo(key) < 0 && tempRoot.right == null){
+
+                //if end of the traversal (to the right) is reached, create a new node
+                //containing the key and value pair
+
                 tempRoot.right = new Node(key, val);
-                tempRoot = tempRoot.right;
                 break;
             }else if(tempRoot.key.compareTo(key) < 0 && tempRoot.right != null){
+
+                //if the key value is bigger than one in a node, traverse to the right
+
                 tempRoot = tempRoot.right;
             }else if(tempRoot.key.compareTo(key) == 0){
+
+                //if a key was found with the same key value, change the value contained in the target node
+
                 tempRoot.value = val;
                 break;
             }

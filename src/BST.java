@@ -20,35 +20,8 @@ public class BST<K extends Comparable<K>, V> {
             root = new Node(key, val);
             return;
         }
+        
         Node tempRoot = root;
-
-        /*
-        if(root == null || root.key.compareTo(node.key) == 0){
-            root = node;
-            return;
-        }
-
-        tempRoot = root;
-        while(tempRoot.key.compareTo(node.key) == 1){
-            if(tempRoot.left != null){
-                tempRoot = tempRoot.left;
-            }else{
-                tempRoot.left = node;
-                return;
-            }
-        }
-
-        tempRoot = root;
-        while(tempRoot.key.compareTo(node.key) == -1){
-            if(tempRoot.right != null){
-                tempRoot = tempRoot.right;
-            }else{
-                tempRoot.right = node;
-                return;
-            }
-        }
-
-         */
 
         while(true){
             if(tempRoot.key.compareTo(key) > 0 && tempRoot.left == null){
